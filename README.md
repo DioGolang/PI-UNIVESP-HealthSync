@@ -1,6 +1,12 @@
 # Sistema de Monitoramento de Saúde com Microserviços HealthSync
 
-O crescente aumento de doenças crônicas e a necessidade de monitoramento contínuo da saúde dos pacientes, especialmente em ambientes hospitalares e domiciliares, exige uma solução escalável e eficiente para coletar, processar e analisar dados vitais em tempo real. 
+## Descrição
+
+O crescente aumento de doenças crônicas e a necessidade de monitoramento contínuo da saúde dos pacientes, especialmente em ambientes hospitalares e domiciliares, exige uma solução escalável e eficiente para coletar, processar e analisar dados vitais em tempo real.
+
+Este projeto visa o desenvolvimento de um Sistema de Monitoramento de Saúde baseado em microserviços, que coleta e analisa sinais vitais de pacientes em tempo real. Utilizando dispositivos IoT, o sistema tem como foco a escalabilidade e flexibilidade, proporcionando monitoramento contínuo e alertas para anomalias nos sinais vitais.
+
+A arquitetura é baseada em microserviços com NestJS e PostgreSQL para dados relacionais, InfluxDB para séries temporais, RabbitMQ/Kafka para mensageria, além de segurança robusta com autenticação JWT/OAuth2 e criptografia de dados. 
 
 A proposta deste sistema é construir uma plataforma de monitoramento de saúde baseada em microserviços, que permite a coleta de dados de dispositivos IoT (como wearables, monitores de pressão arterial e oxímetros), a análise de dados de séries temporais e a geração de alertas para profissionais de saúde e pacientes.
 
@@ -8,6 +14,7 @@ A arquitetura baseada em microserviços foi escolhida para garantir escalabilida
 
 Tecnologias como Node.js com TypeScript (usando o framework NestJS) para o backend, PostgreSQL para dados relacionais, InfluxDB para séries temporais e RabbitMQ/Kafka para mensageria serão utilizadas. A comunicação com dispositivos IoT será feita via MQTT ou WebSocket, e a orquestração dos microserviços será gerenciada com Docker e Kubernetes.
 
+---
 
 == Requirements
 
@@ -131,3 +138,43 @@ frequência cardíaca.
 4. Análise de logs e métricas com Grafana e ELK Stack.
 5. Ajustes contínuos com base em dados de uso e feedback do usuário.
 
+---
+
+## Fontes de Dados
+
+Os dados utilizados neste sistema são provenientes da PhysioNet, um repositório de dados médicos públicos. Este projeto especificamente utiliza os seguintes conjuntos de dados:
+
+EEG (Eletroencefalograma): Dados para análise de padrões de atividade cerebral.
+ECG (Eletrocardiograma): Dados para análise de sinais cardíacos e monitoramento de condições relacionadas ao coração.
+
+Esses dados são utilizados com a finalidade de treinamento de modelos de Machine Learning (como Isolation Forest e LSTM) para detecção de anomalias e padrões nos sinais vitais dos pacientes.
+
+## Métodos de gestão de mercado
+
+O banco de dados é originário de sete hospitais acadêmicos nos EUA e na Europa, liderados por investigadores que fazem parte do consórcio International Cardiac Arrest REsearch (I-CARE)
+
+1. Rijnstate Hospital, Arnhem, Países Baixos (Jeannette Hofmeijer).
+2. Medisch Spectrum Twente, Enschede, Países Baixos (Barry J. Qualidade do ar em Ruijter, Marleen C. Outros produtos Tjepkema-cloostermans, Michel J. A. A. (em inglês). M. van Putten (em inglês).
+3. Hospital Erasme, Bruxelas, Bélgica (Nicolas Gaspard).
+4. Hospital Geral de Massachusetts, Boston, Massachusetts, EUA (Edilberto Amorim, Wei-Long Zheng, Mohammad Ghassemi e M. Brandon Westover (em inglês).
+5. Hospital Brigham e Feminino, Boston, Massachusetts, EUA (Jong Woo Lee).
+6. Beth Israel Deaconess Medical Center, Boston, Massachusetts, EUA (Susan T.) Herman (em inglês).
+Hospital Yale New Haven, New Haven, Connecticut, EUA (Adithya Sivaraju).
+
+Esta base de dados consiste em dados clínicos, de EEG e ECG de doentes adultos com paragem cardíaca fora do hospital ou intra-hospitalar que tiveram retorno da função cardíaca (ou seja, retorno da circulação espontânea [ROSC]), mas permaneceram em coma - definidos como a incapacidade de seguir comandos verbais e um Score de Coma de Glasgow inferior ou igual a 8.
+
+A liberação inicial do banco de dados contém dados de mais de 32.712 horas de dados em 80.809 segmentos de 607 pacientes - este é o treinamento público definido para o George B. Desafio Moody PhysioNet 2023. Esta versão do banco de dados não contém dados dos restantes 413 pacientes que estamos retendo como a validação oculta e os conjuntos de testes para o Desafio.
+
+Todos os pacientes foram admitidos em uma UTI e tiveram sua atividade cerebral monitorada com EEG contínuo. O monitoramento foi tipicamente iniciado dentro de horas de parada cardíaca e continuou por várias horas a vários dias, dependendo da condição do paciente, de modo que o tempo de início e a duração do registro variam de paciente para paciente. Este banco de dados inclui dados de EEG e, quando possível, dados de ECG para cada paciente. Este projeto contém a parte do banco de dados que compartilhamos como um conjunto de treinamento público para o PhysioNet Challenge 2023; o restante do banco de dados foi mantido como validação privada e conjuntos de testes para o Desafio. Os dados de um sistema hospitalar foram omitidos do treinamento e dos conjuntos de validação para avaliar a generalização para dados não vistos.
+
+---
+
+## Conformidade e Privacidade
+
+Este projeto foi desenvolvido com foco na conformidade com regulamentações de privacidade e segurança de dados, como a LGPD (Lei Geral de Proteção de Dados), HIPAA (Health Insurance Portability and Accountability Act) e GDPR (General Data Protection Regulation). Embora os dados do PhysioNet sejam públicos, será importante garantir que qualquer dado pessoal utilizado seja tratado de maneira segura e em conformidade com as leis aplicáveis.
+
+---
+
+## Licença
+
+Este projeto está licenciado sob a MIT License.
