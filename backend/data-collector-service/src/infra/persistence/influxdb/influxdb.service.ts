@@ -4,23 +4,18 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class InfluxdbService implements OnModuleInit {
-  constructor(
-    private readonly configService: ConfigService,
-    private influxDB: InfluxDB,
-    private writeApi: WriteApi,
-  ) {}
+  private influxDB: InfluxDB;
+  private writeApi: WriteApi;
+  constructor(private readonly configService: ConfigService) {}
 
   onModuleInit() {
-    this.influxDB = new InfluxDB({
-      url: this.configService.get('INFLUXDB_URL'),
-      token: this.configService.get('INFLUXDB_TOKEN'),
-    });
+    const url = this.configService.get<string>('INFLUX_URL');
+    const token = this.configService.get<string>('INFLUX_TOKEN');
+    const org = this.configService.get<string>('INFLUX_ORG');
+    const bucket = this.configService.get<string>('INFLUX_BUCKET');
 
-    this.writeApi = this.influxDB.getWriteApi(
-      this.configService.get('INFLUXDB_ORG'),
-      this.configService.get('INFLUXDB_BUCKET'),
-    );
-
+    this.influxDB = new InfluxDB({ url, token });
+    this.writeApi = this.influxDB.getWriteApi(org, bucket);
     this.writeApi.useDefaultTags({ host: 'host1' });
   }
 
