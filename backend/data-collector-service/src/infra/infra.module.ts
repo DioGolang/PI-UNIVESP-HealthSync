@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { InfluxdbModule } from './persistence/influxdb/influxdb.module';
+import { InfluxdbClientModule } from './persistence/influxdb/influxdb.client.module';
 
 @Module({
-  imports: [InfluxdbModule],
+  imports: [InfluxdbClientModule],
 })
 export class InfraModule {}
